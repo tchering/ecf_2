@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+{% block title %}
+Evaluation Trimestrielle
+{% endblock %}
+{% block body %}
+<!-- Vertically centered modal -->
+
+<div class="eval-container">
+    <h1 class="title">SAISIE EVALUATION TRIMESTRIELLE</h1>
+    <div class="inner-container container-sm">
+        <form action="" method="post" class="form-container container-fluid">
+            <div class="form-group form-flex-half row">
+                <label for="num" class="">Numero:</label>
+                <input type="text" id="num" class="form-control">
+            </div>
+            <div class="form-group form-flex row">
+                <label for="num" class="col-12 col-md-5">Annéé Scolaire:</label>
+                <input type="text" id="" class="form-control col-12 col-md-5">
+            </div>
+            <div class="form-group form-flex row">
+                <label for="num" class="col-12 col-md-5">Triméstre:</label>
+                <input type="text" id="" class="form-control col-12 col-md-5">
+            </div>
+            <div class="form-group  form-flex row">
+                <label for="num" class="col-12 col-md-5">Formateur:</label>
+                <input type="text" id="" class="form-control col-12 col-md-5">
+            </div>
+            <div class="form-group form-flex row">
+                <label for="num" class="col-12 col-md-5">Classe:</label>
+                <input type="text" id="" class="form-control col-12 col-md-5">
+            </div>
+            <div class="form-group form-flex row">
+                <label for="num" class="col-12 col-md-5">Matière:</label>
+                <input type="text" id="" class="form-control col-12 col-md-5">
+            </div>
+            <div class="buttons d-flex justify-content-between my-3">
+                <a id="show_modal_art" href="#modal_art" class="btn btn-dark">Modifier</a>
+                <a href="" class="btn btn-primary">Importer</a>
+                <a href="" class="btn btn-success">Exporter vers Excel</a>
+            </div>
+        </form>
+
+        <div class="inner-container container-fluid">
+            <div class="inner-container container-fluid">
+                <div class="table-responsive">
+                    <table class="table table-bordered W100 container-fluid my-4">
+                        <!-- Your table content -->
+                        <thead class="bg-dark">
+                            <tr class=" bg-danger inside bg-black">
+                                <th class="bg-black w5"></th>
+                                <th class="bg-black col-1">CODE</th>
+                                <th class="bg-black col-2">NOM</th>
+                                <th class="bg-black col-2">PRENOM</th>
+                                <th class="bg-black col-2">NOTE</th>
+                                <th class="bg-black col-4">APPRCIATION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_eval">
+
+                        </tbody>
+                        <tfoot id="tfooter_eval" class="">
+                            <tr class="">
+                                <th colspan="12" class="bg-black text-center ">Moyenne de classe:</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_art" class="">
+        <div id="modal_art_content">
+            <h1 class="title text-dark" id="client">MODIFICATION NOTE</h1>
+            <a href="" id="modal_close"><i class="fa fa-close"></i></a>
+            <div action="" class="text_center">
+                <div class="zone_saisie my-2 row">
+                    <label for="" class="lab20 fw-bold col-12 col-md-3">CODE</label>
+                    <input type="text" id="id" name="" value="" class="form-control w-50">
+                </div>
+                <div class="zone_saisie my-2 fw-bold row ">
+                    <label for="numClient" class="col-12 col-md-3">NOM & PRENOM</label>
+                    <input type="text" id="numClient" name="numClient" class="form-control w-50">
+                </div>
+                <div class="zone_saisie my-2 fw-bold row ">
+                    <label for="nomClient" class="col-12 col-md-3">NOTE</label>
+                    <input type="text" id="nomClient" name="nomClient" class="form-control w-50">
+                </div>
+                <div class="zone_saisie my-2 fw-bold row ">
+                    <label for="adresseClient" class="col-12 col-md-3">APPRECIATION</label>
+                    <textarea id="adresseClient" name="adresseClient" class="form-control w-50"></textarea>
+                </div>
+                <div class=" d-flex justify-content-between mt-4">
+                    <a href="" class="btn btn-secondary">Fermer</a>
+                    <a href="" class="btn btn-primary">Annuler</a>
+                    <a href="" class="btn btn-success">Valider</a>
+                </div>
+            </div>
+            <img id="loader" src="img/loader1.gif" alt="">
+        </div>
+    </div>
+    {% endblock %}

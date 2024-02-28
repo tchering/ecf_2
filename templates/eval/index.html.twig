@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EvalController!{% endblock %}
+
+{% block body %}
+<div class="eval-container">
+
+    <h1 class="title">LISTE EVALUATION TRIMESTRIELLE</h1>
+    <div class="inner-container">
+        <div class="buttons d-flex justify-content-around my-3">
+            <a href="javascript:add()" class="btn btn-dark">Creer</a>
+            <a href="javascript:show()" class="btn btn-primary">Afficher</a>
+            <a href="javascript:modify()" class="btn btn-success">Modifier</a>
+            <a href="" class="btn btn-warning">Saisie note et appreciation</a>
+            <a href="javascript:supprimer()" class="btn btn-danger">Supprimer</a>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="bg-dark">
+                    <tr class=" bg-danger inside bg-black">
+                        <th class="bg-black w5"></th>
+                        <th class="bg-black col-1 ">ANNEE SCOLAIRE</th>
+                        <th class="bg-black col-1 ">TRIMESTRE</th>
+                        <th class="bg-black col-3">N° EVALUATION</th>
+                        <th class="bg-black col-1 ">DATE EVALUATION</th>
+                        <th class="bg-black col-3 ">FORMATEUR</th>
+                        <th class="bg-black col-1 ">CLASSE</th>
+                        <th class="bg-black col-2 ">MATIERE</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody_eval">
+
+                </tbody>
+                <tfoot id="tfooter_eval">
+                    <tr class="">
+                        <th colspan="12" class="bg-black text-center">Total:</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+{% block script %}
+<script>
+    const show = () => {
+
+    }
+
+    const add = () => {
+        const url = "{{path('app_eval_new',{'id':0})}}";
+        document.location.href = url;
+    }
+</script>
+{% endblock %}
+{% endblock %}

@@ -8,7 +8,7 @@
     <h1 class="title">LISTE EVALUATION TRIMESTRIELLE</h1>
     <div class="inner-container">
         <div class="buttons d-flex justify-content-around my-3">
-            <a href="javascript:add()" class="btn btn-dark">Creer</a>
+            <a href="javascript:ajouter()" class="btn btn-dark">Creer</a>
             <a href="javascript:show()" class="btn btn-primary">Afficher</a>
             <a href="javascript:modify()" class="btn btn-success">Modifier</a>
             <a href="" class="btn btn-warning">Saisie note et appreciation</a>
@@ -48,7 +48,7 @@
 
     }
 
-    const add = () => {
+    const ajouter = () => {
         const url = "{{path('app_eval_new',{'id':0})}}";
         document.location.href = url;
     }

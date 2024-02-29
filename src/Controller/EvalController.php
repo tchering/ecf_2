@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Evaluation;
+use App\Form\EvaluationType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EvalController extends AbstractController
 {
@@ -17,8 +21,25 @@ class EvalController extends AbstractController
     }
 
     #[Route('/eval/new/{id}', name: 'app_eval_new')]
-    public function  new()
+    public function  new(Request $request, EntityManagerInterface $em, $id)
     {
-        return $this->render('eval/show.html.twig');
+        $id = (int) $id;
+        if ($id) {
+            $evaluation = $em->getRepository(Evaluation::class)->find($id);
+        } else {
+            $evaluation = new Evaluation();
+        }
+        $form = $this->createForm(EvaluationType::class, $evaluation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $anneeScolaireCode = $form->get('code')->getData();
+            $em->persist($evaluation);
+            $em->flush();
+            return $this->redirectToRoute('app_eval');
+        }
+
+        return $this->render('eval/show.html.twig', [
+            'form' => $form,
+        ]);
     }
 }

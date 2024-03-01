@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div id="" class=" d-flex justify-content-center mt-4">
+    <div class="w-50 bg-light shadow-lg p-3">
+        <h1 class="title text-dark" id="client">Detail Individu</h1>
+        <a href="" id="modal_close">
+            <i class="fa fa-close"></i>
+        </a>
+        {{ form_start(form, {'attr': {'class': 'text-center'}}) }}
+
+        <div class="form-group row">
+            {{ form_label(form.evaluation, 'CODE', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.evaluation, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            {{ form_label(form.individu, 'NOM & PRENOM', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.individu, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            {{ form_label(form.note, 'NOTE', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.note, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            {{ form_label(form.appreciation, 'APPRECIATION', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.appreciation, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="  d-flex justify-content-around">
+                <a href="{{path('app_saisir_note')}}" class="btn btn-secondary">Fermer</a>
+                <a href="" class="btn btn-primary">Annuler</a>
+                <button type="submit" class="btn btn-success">Valider</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+
+{% endblock %}

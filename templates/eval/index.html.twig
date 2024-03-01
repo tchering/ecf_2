@@ -1,57 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EvalController!{% endblock %}
+{% block title %}Hello EvalController!
+{% endblock %}
 
 {% block body %}
 <div class="eval-container">
 
-    <h1 class="title">LISTE EVALUATION TRIMESTRIELLE</h1>
-    <div class="inner-container">
-        <div class="buttons d-flex justify-content-around my-3">
-            <a href="javascript:ajouter()" class="btn btn-dark">Creer</a>
-            <a href="javascript:show()" class="btn btn-primary">Afficher</a>
-            <a href="javascript:modify()" class="btn btn-success">Modifier</a>
-            <a href="" class="btn btn-warning">Saisie note et appreciation</a>
-            <a href="javascript:supprimer()" class="btn btn-danger">Supprimer</a>
-        </div>
+	<h1 class="title">LISTE EVALUATION TRIMESTRIELLE</h1>
+	<div class="inner-container">
+		<div class="buttons d-flex justify-content-around my-3">
+			<a href="javascript:ajouter()" class="btn btn-dark">Creer</a>
+			<a href="javascript:show()" class="btn btn-primary">Afficher</a>
+			<a href="javascript:modify()" class="btn btn-success">Modifier</a>
+			<a href="javascript:saisieNote()" class="btn btn-warning">Saisie note et appreciation</a>
+			<a href="javascript:supprimer()" class="btn btn-danger">Supprimer</a>
+		</div>
 
 
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="bg-dark">
-                    <tr class=" bg-danger inside bg-black">
-                        <th class="bg-black w5"></th>
-                        <th class="bg-black col-1 ">ANNEE SCOLAIRE</th>
-                        <th class="bg-black col-1 ">TRIMESTRE</th>
-                        <th class="bg-black col-3">N° EVALUATION</th>
-                        <th class="bg-black col-1 ">DATE EVALUATION</th>
-                        <th class="bg-black col-3 ">FORMATEUR</th>
-                        <th class="bg-black col-1 ">CLASSE</th>
-                        <th class="bg-black col-2 ">MATIERE</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody_eval">
-
-                </tbody>
-                <tfoot id="tfooter_eval">
-                    <tr class="">
-                        <th colspan="12" class="bg-black text-center">Total:</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead class="bg-dark">
+					<tr class=" bg-danger inside bg-black">
+						<th class="bg-black w5"></th>
+						<th class="bg-black col-1 ">ANNEE SCOLAIRE</th>
+						<th class="bg-black col-1 ">TRIMESTRE</th>
+						<th class="bg-black col-3">N° EVALUATION</th>
+						<th class="bg-black col-1 ">DATE EVALUATION</th>
+						<th class="bg-black col-3 ">FORMATEUR</th>
+						<th class="bg-black col-1 ">CLASSE</th>
+						<th class="bg-black col-2 ">MATIERE</th>
+					</tr>
+				</thead>
+				<tbody id="tbody_eval">
+					{% for line in evaluation %}
+					<tr class="text-center">
+						<td><input type="checkbox" name="check" class="form-check-input" id="{{line.id}}"
+								value="{{line.id}}" onclick="onlyOne(this)"></td>
+						<td>{{line.trimestre.anneescolaire.code}}</td>
+						<td>{{line.trimestre.libelle}}</td>
+						<td>{{line.numero}}</td>
+						<td>{{ line.dateEvaluation|date('Y-m-d') }}</td>
+						<td>{{line.individu.nom}}</td>
+						<td>{{line.individu.classe.libelle}}</td>
+						<td>{{line.matiere.libelle}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+				<tfoot id="tfooter_eval">
+					<tr class="">
+						<th colspan="12" class="bg-black text-center">Total:</th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
 </div>
 {% block script %}
 <script>
-    const show = () => {
 
-    }
+	const saisieNote = () => {
+		{
+			let id = getIdChecked('check');
+			if (id == 0) {
+				alert('please select the line');
+			} else {
+				const url = "{{ path('app_eval_saisir',{'id':'placeholder'}) }}";
+				const newUrl = url.replace('placeholder', id);
+				document.location.href = newUrl;
+			}
 
-    const ajouter = () => {
-        const url = "{{path('app_eval_new',{'id':0})}}";
-        document.location.href = url;
-    }
+		}
+	}
+	const ajouter = () => {
+		const url = "{{ path('app_eval_new',{'id':0}) }}";
+		document.location.href = url;
+	}
+
+	const modify = () => {
+		alert('hello');
+	}
+
+	const supprimer = () => {
+		let id = getIdChecked('check');
+		if (id == 0) {
+			alert('please select line to delete');
+		} else {
+			let response = confirm('Are you sure you want to delete this line ? ');
+			if (response) {
+				const url = "{{ path('app_eval_delete',{'id':    'placeholder'}) }}";
+				const newUrl = url.replace('placeholder', id);
+				document.location.href = newUrl;
+			}
+		}
+	}
 </script>
 {% endblock %}
 {% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html.twig" %}
+{% block title %}
+Evaluation Trimestrielle
+{% endblock %}
+{% block body %}
+<!-- Vertically centered modal -->
+
+<div class="eval-container">
+	<h1 class="title">SAISIE EVALUATION TRIMESTRIELLE</h1>
+	<div class="inner-container container-sm">
+		<div class="form-container container-fluid">
+			<form action="" method="post" class="form-container container-fluid">
+				<div class="form-group form-flex-half row">
+					<label for="num">Numero:</label>
+					<input type="text" id="num" class="form-control" value="">
+				</div>
+				<div class="form-group form-flex row">
+					<label for="anneeScolaire" class="col-12 col-md-5">Année Scolaire:</label>
+					<input type="text" id="anneeScolaire" class="form-control col-12 col-md-5">
+				</div>
+				<div class="form-group form-flex row">
+					<label for="trimestre" class="col-12 col-md-5">Trimestre:</label>
+					<input type="text" id="trimestre" class="form-control col-12 col-md-5">
+				</div>
+				<div class="form-group form-flex row">
+					<label for="formateur" class="col-12 col-md-5">Formateur:</label>
+					<input type="text" id="formateur" class="form-control col-12 col-md-5">
+				</div>
+				<div class="form-group form-flex row">
+					<label for="classe" class="col-12 col-md-5">Classe:</label>
+					<input type="text" id="classe" class="form-control col-12 col-md-5">
+				</div>
+				<div class="form-group form-flex row">
+					<label for="matiere" class="col-12 col-md-5">Matière:</label>
+					<input type="text" id="matiere" class="form-control col-12 col-md-5">
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
+<div class="inner-container container-fluid">
+	<div class="inner-container container-fluid">
+		<div class="table-responsive">
+			<table class="table table-bordered W100 container-fluid">
+				<!-- Your table content -->
+				<thead class="bg-dark">
+					<tr class=" bg-danger inside bg-black">
+						<th class="bg-black w5"></th>
+						<th class="bg-black col-1">CODE</th>
+						<th class="bg-black col-2">NOM</th>
+						<th class="bg-black col-2">PRENOM</th>
+						<th class="bg-black col-2">NOTE</th>
+						<th class="bg-black col-4">APPRCIATION</th>
+					</tr>
+				</thead>
+				<tbody id="tbody_eval">
+					<!-- {# {% for line in ligneEval %}
+					<tr class="text-center">
+						<td><input type="checkbox" class="form-check-input" id="{{line.id}}" value="{{line.id}}"
+								name="check" onclick="onlyOne(this)"></td>
+						<td>{{line.id}}</td>
+						<td>{{line.individu.nom}}</td>
+						<td>{{line.individu.prenom}}</td>
+						<td>{{line.note}}</td>
+						<td>{{line.appreciation}}</td>
+					</tr>
+					{% endfor %} #} -->
+					<td><input type="checkbox" class="form-check-input" id="{{ligneEval.id|default('defaultId')}}"
+							value="{{ligneEval.id|default('defaultValue')}}" name="check" onclick="onlyOne(this)"></td>
+					<td>{{ligneEval.id}}</td>
+					<td>{{ligneEval.individu.nom}}</td>
+					<td>{{ligneEval.individu.prenom}}</td>
+					<td>{{ligneEval.note}}</td>
+					<td>{{ligneEval.appreciation}}</td>
+				</tbody>
+				<tfoot id="tfooter_eval" class="">
+					<tr class="">
+						<th colspan="12" class="bg-black text-center ">Moyenne de classe:</th>
+					</tr>
+				</tfoot>
+				<div class="buttons d-flex justify-content-between my-3">
+					<a href="#modal_art" id="show_modal_art">Modal</a>
+					<a id="" href="javascript:modifier()" class="btn btn-dark">Modifier</a>
+					<a href="" class="btn btn-primary">Importer</a>
+					<a href="" class="btn btn-success">Exporter vers Excel</a>
+				</div>
+			</table>
+		</div>
+	</div>
+</div>
+<div id="modal_art" class="">
+	<div id="modal_art_content">
+		<h1 class="title text-dark" id="client">MODIFICATION NOTE</h1>
+		<a href="" id="modal_close">
+			<i class="fa fa-close"></i>
+		</a>
+		{{ form_start(form, {'attr': {'class': 'text-center'}}) }}
+
+		<div class="form-group row">
+			{{ form_label(form.evaluation, 'CODE', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+			<div class="col-md-9">
+				{{ form_widget(form.evaluation, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			{{ form_label(form.individu, 'NOM & PRENOM', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+			<div class="col-md-9">
+				{{ form_widget(form.individu, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			{{ form_label(form.note, 'NOTE', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+			<div class="col-md-9">
+				{{ form_widget(form.note, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			{{ form_label(form.appreciation, 'APPRECIATION', {'label_attr': {'class': 'col-form-label col-md-3'}}) }}
+			<div class="col-md-9">
+				{{ form_widget(form.appreciation, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="  d-flex justify-content-around">
+				<a href="{{path('app_saisir_note')}}" class="btn btn-secondary">Fermer</a>
+				<a href="" class="btn btn-primary">Annuler</a>
+				<button type="submit" class="btn btn-success">Valider</button>
+			</div>
+		</div>
+
+		{{ form_end(form) }}
+	</div>
+</div>
+{% block script %}
+<script>
+
+
+	const modifier = () => { // Prevent the default action
+		let id = getIdChecked("check");
+		if (id == 0) {
+			alert('Please select line to modify.');
+		} else {
+			const url = "{{ path('app_saisir_show', {'id': 'placeholder'}) }}";
+			const newUrl = url.replace('placeholder', id);
+			document.location.href = newUrl;
+			// show_modal_art.click();
+		}
+	}
+</script>
+{% endblock %}
+{% endblock %}

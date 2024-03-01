@@ -27,12 +27,10 @@ class EvaluationType extends AbstractType
             ->add('dateEvaluation', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
-                'label_attr' => ['class' => 'd-none'],
-                'attr' => ['class' => 'd-none']
+                'label_attr' => ['class' => ''],
+                'attr' => ['class' => '']
             ])
-            // ->add('anneeScolaire', AnneeScolaireType::class, [
-            //     'mapped' => false,
-            // ])
+         
             ->add('code', EntityType::class, [
                 'class' => AnneeScolaire::class,
                 'choice_label' => 'code',
@@ -41,7 +39,7 @@ class EvaluationType extends AbstractType
             ])
             ->add('trimestre', EntityType::class, [
                 'class' => Trimestre::class,
-                'choice_label' => 'id',
+                'choice_label' => 'code',
             ])
             ->add('individu', EntityType::class, [
                 'class' => Individu::class,

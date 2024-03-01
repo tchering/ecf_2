@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div class="d-flex justify-content-center mt-4">
+		<div class="w-50 bg-light shadow-lg p-3">
+			<h1 class="title text-dark" id="client">Insert New Evaluation</h1>
+			<a href="" id="modal_close">
+				<i class="fa fa-close"></i>
+			</a>
+			{{ form_start(form, {'attr': {'class': 'text_center'}}) }}
+
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.numero, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Number'}) }}
+				{{ form_widget(form.numero, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.dateEvaluation, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': ''}) }}
+				{{ form_widget(form.dateEvaluation, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.code, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Anneé Scolaire'}) }}
+				{{ form_widget(form.code, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.trimestre, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Trimestre'}) }}
+				{{ form_widget(form.trimestre, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.individu, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Formateur'}) }}
+				{{ form_widget(form.individu, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.libelle, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Classe'}) }}
+				{{ form_widget(form.libelle, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.matiere, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Matiere'}) }}
+				{{ form_widget(form.matiere, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<!-- Add other fields similarly -->
+			<div class="d-flex justify-content-between mt-4">
+				<a href="{{ path('app_eval') }}" class="btn btn-secondary">Close</a>
+				<a href="" class="btn btn-primary">Cancel</a>
+				<button type="submit" class="btn btn-success">Validate</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+{% endblock %}

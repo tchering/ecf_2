@@ -72,3 +72,13 @@ INSERT into trimestre(code,libelle,date_debut,date_fin,anneescolaire_id) VALUES
 ('T1','1er Trimestre','2030-01-01','2030-04-30',10),
 ('T2','2eme Trimestre','2030-05-01','2030-08-31',10),
 ('T3','3eme Trimestre','2030-09-01','2030-12-31',10);
+
+insert into ligne_evaluation(evaluation_id,individu_id,note,appreciation) VALUES 
+(3,3,15,'Bien');
+
+insert into ligne_evaluation(evaluation_id,individu_id,note,appreciation) VALUES 
+(4,5,20,'Assez Bien');
+
+insert into ligne_evaluation(evaluation_id,individu_id,note,appreciation) VALUES 
+(5,6,10,'Excellent super travail');
+

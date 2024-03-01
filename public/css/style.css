@@ -1,7 +1,5 @@
-
-
 .eval-container {
-  height: 50vh;
+  min-height: 20vh;
   background-color: rgb(243, 239, 239);
   margin-top: 10px;
   border-radius: 10px;

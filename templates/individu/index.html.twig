@@ -4,140 +4,143 @@
 {% endblock %}
 
 {% block body %}
-<div class="eval-container">
+	<div class="eval-container">
 
-    <h1 class="title">LISTE ENDIVIDU</h1>
-    <div class="inner-container">
-        <div class="buttons d-flex justify-content-around my-3">
-            <!-- <a id="show_modal_art" href="#modal_art" class="btn btn-dark" onclick="creer()">Creer</a> -->
-            <a id="show_modal_art" href="javascript:creer()" class="btn btn-dark">Creer</a>
-            <a href="javascript:show()" class="btn btn-primary">Afficher</a>
-            <a href="javascript:modifier()" class="btn btn-success">Modifier</a>
-            <a href="javascript:supprimer()" class="btn btn-danger">Supprimer</a>
-        </div>
+		<h1 class="title">LISTE ENDIVIDU</h1>
+		<div class="inner-container">
+			<div
+				class="buttons d-flex justify-content-around my-3">
+				<!-- <a id="show_modal_art" href="#modal_art" class="btn btn-dark" onclick="creer()">Creer</a> -->
+				<a id="show_modal_art" href="javascript:creer()" class="btn btn-dark">Creer</a>
+				<a href="javascript:show()" class="btn btn-primary">Afficher</a>
+				<a href="javascript:modifier()" class="btn btn-success">Modifier</a>
+				<a href="javascript:supprimer()" class="btn btn-danger">Supprimer</a>
+			</div>
 
 
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="bg-dark">
-                    <tr class=" bg-danger inside bg-black">
-                        <th class="bg-black w5"></th>
-                        <th class="bg-black col-1 ">MATRICULE</th>
-                        <th class="bg-black col-1 ">NOM</th>
-                        <th class="bg-black col-3">PRENOM</th>
-                        <th class="bg-black col-1 ">ADRESSE</th>
-                        <th class="bg-black col-3 ">TELEPHONE</th>
-                        <th class="bg-black col-1 ">C.LIBELLE</th>
-                        <th class="bg-black col-2 ">ROLE LIBELLE</th>>
-                    </tr>
-                </thead>
-                <tbody id="tbody_eval">
-                    {% for individu in individus %}
-                    <tr class="text-center">
-                        <td><input type="checkbox" class="form-check-input" id="{{individu.id}}" value="{{individu.id}}"
-                                name="check" onclick="onlyOne(this)"></td>
-                        <td>{{individu.numeroMatricule}}</td>
-                        <td>{{individu.nom}}</td>
-                        <td>{{individu.preNom}}</td>
-                        <td>{{individu.adresse}}</td>
-                        <td>{{individu.telephone}}</td>
-                        <td>{{individu.classe.libelle}}</td>
-                        <td>{{individu.TypeIndividu.libelle}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-                <tfoot id="tfooter_eval">
-                    <tr class="">
-                        <th colspan="12" class="bg-black text-center">Total:</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-</div>
-<div id="modal_art" class="">
-    <div id="modal_art_content">
-        <h1 class="title text-dark" id="client">Inserer Nouvelle Individu</h1>
-        <a href="" id="modal_close"><i class="fa fa-close"></i></a>
-        <div action="" class="text_center">
-            <div class="zone_saisie my-2 row">
-                <label for="" class="lab20 fw-bold col-12 col-md-3">Matricule</label>
-                <input type="text" id="id" name="" value="" class="form-control w-50">
-            </div>
-            <div class="zone_saisie my-2 fw-bold row ">
-                <label for="numClient" class="col-12 col-md-3">NOM</label>
-                <input type="text" id="numClient" name="numClient" class="form-control w-50">
-            </div>
-            <div class="zone_saisie my-2 fw-bold row ">
-                <label for="nomClient" class="col-12 col-md-3">PRENOM</label>
-                <input type="text" id="nomClient" name="nomClient" class="form-control w-50">
-            </div>
-            <div class="zone_saisie my-2 fw-bold row ">
-                <label for="nomClient" class="col-12 col-md-3">ADRESSE</label>
-                <input type="text" id="" name="nomClient" class="form-control w-50">
-            </div>
-            <div class="zone_saisie my-2 fw-bold row ">
-                <label for="nomClient" class="col-12 col-md-3">TELEPHONE</label>
-                <input type="text" id="" name="nomClient" class="form-control w-50">
-            </div>
-            <div class="zone_saisie my-2 fw-bold row ">
-                <label for="nomClient" class="col-12 col-md-3">Classe</label>
-                <input type="text" id="" name="nomClient" class="form-control w-50">
-            </div>
-            <div class="zone_saisie my-2 fw-bold row ">
-                <label for="nomClient" class="col-12 col-md-3">Role </label>
-                <input type="text" id="" name="nomClient" class="form-control w-50">
-            </div>
-            <div class=" d-flex justify-content-between mt-4">
-                <a href="" class="btn btn-secondary">Fermer</a>
-                <a href="" class="btn btn-primary">Annuler</a>
-                <a href="" class="btn btn-success">Valider</a>
-            </div>
-        </div>
-    </div>
-</div>
-{% block script %}
-<script>
-    const show = () => {
-        let id = getIdChecked('check');
-        if (id == 0) {
-            alert('Please select individu for detail');
-        } else {
-            const url = "{{ path('app_individu_show', {'id': 'placeholder'}) }}";
-            const newUrl = url.replace('placeholder', id);
-            document.location.href = newUrl;
-        }
-    }
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead class="bg-dark">
+						<tr class=" bg-danger inside bg-black">
+							<th class="bg-black w5"></th>
+							<th class="bg-black col-1 ">MATRICULE</th>
+							<th class="bg-black col-1 ">NOM</th>
+							<th class="bg-black col-3">PRENOM</th>
+							<th class="bg-black col-1 ">ADRESSE</th>
+							<th class="bg-black col-3 ">TELEPHONE</th>
+							<th class="bg-black col-1 ">C.LIBELLE</th>
+							<th class="bg-black col-2 ">ROLE LIBELLE</th>>
+						</tr>
+					</thead>
+					<tbody id="tbody_eval">
+						{% for individu in individus %}
+							<tr class="text-center">
+								<td><input type="checkbox" class="form-check-input" id="{{individu.id}}" value="{{individu.id}}" name="check" onclick="onlyOne(this)"></td>
+								<td>{{individu.numeroMatricule}}</td>
+								<td>{{individu.nom}}</td>
+								<td>{{individu.preNom}}</td>
+								<td>{{individu.adresse}}</td>
+								<td>{{individu.telephone}}</td>
+								<td>{{individu.classe.libelle}}</td>
+								<td>{{individu.TypeIndividu.libelle}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot id="tfooter_eval">
+						<tr class="">
+							<th colspan="12" class="bg-black text-center">Total:</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="modal_art" class="">
+		<div id="modal_art_content">
+			<h1 class="title text-dark" id="client">Inserer Nouvelle Individu</h1>
+			<a href="" id="modal_close">
+				<i class="fa fa-close"></i>
+			</a>
+			<div action="" class="text_center">
+				<div class="zone_saisie my-2 row">
+					<label for="" class="lab20 fw-bold col-12 col-md-3">Matricule</label>
+					<input type="text" id="id" name="" value="" class="form-control w-50">
+				</div>
+				<div class="zone_saisie my-2 fw-bold row ">
+					<label for="numClient" class="col-12 col-md-3">NOM</label>
+					<input type="text" id="numClient" name="numClient" class="form-control w-50">
+				</div>
+				<div class="zone_saisie my-2 fw-bold row ">
+					<label for="nomClient" class="col-12 col-md-3">PRENOM</label>
+					<input type="text" id="nomClient" name="nomClient" class="form-control w-50">
+				</div>
+				<div class="zone_saisie my-2 fw-bold row ">
+					<label for="nomClient" class="col-12 col-md-3">ADRESSE</label>
+					<input type="text" id="" name="nomClient" class="form-control w-50">
+				</div>
+				<div class="zone_saisie my-2 fw-bold row ">
+					<label for="nomClient" class="col-12 col-md-3">TELEPHONE</label>
+					<input type="text" id="" name="nomClient" class="form-control w-50">
+				</div>
+				<div class="zone_saisie my-2 fw-bold row ">
+					<label for="nomClient" class="col-12 col-md-3">Classe</label>
+					<input type="text" id="" name="nomClient" class="form-control w-50">
+				</div>
+				<div class="zone_saisie my-2 fw-bold row ">
+					<label for="nomClient" class="col-12 col-md-3">Role
+					</label>
+					<input type="text" id="" name="nomClient" class="form-control w-50">
+				</div>
+				<div class=" d-flex justify-content-between mt-4">
+					<a href="" class="btn btn-secondary">Fermer</a>
+					<a href="" class="btn btn-primary">Annuler</a>
+					<a href="" class="btn btn-success">Valider</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% block script %}
+		<script>
+			const show = () => {
+let id = getIdChecked('check');
+if (id == 0) {
+alert('Please select individu for detail');
+} else {
+const url = "{{ path('app_individu_show', {'id': 'placeholder'}) }}";
+const newUrl = url.replace('placeholder', id);
+document.location.href = newUrl;
+}
+}
 
-    const creer = () => {
-        const url = "{{path('app_individu_new',{'id':0})}}";
-        document.location.href = url;
-    }
-    const modifier = () => {
-        let id = getIdChecked('check');
-        if (id == 0) {
-            alert('Please select individu to modify');
-        } else {
-            const url = "{{path('app_individu_new',{'id':'placeholder'})}}";
-            const newUrl = url.replace('placeholder', id);
-            document.location.href = newUrl;
-        }
-    }
+const creer = () => {
+const url = "{{ path('app_individu_new',{'id':0}) }}";
+document.location.href = url;
+}
+const modifier = () => {
+let id = getIdChecked('check');
+if (id == 0) {
+alert('Please select individu to modify');
+} else {
+const url = "{{ path('app_individu_new',{'id':'placeholder'}) }}";
+const newUrl = url.replace('placeholder', id);
+document.location.href = newUrl;
+}
+}
 
-    const supprimer = () => {
-        let id = getIdChecked('check');
-        if (id == 0) {
-            alert('Please select individu to delete');
-        } else {
-            const response = confirm('Do you really want to delete?');
-            if (response) {
-                const url = "{{path('app_individu_delete',{'id':'placeholder'})}}";
-                const newUrl = url.replace('placeholder', id);
-                document.location.href = newUrl
-            }
+const supprimer = () => {
+let id = getIdChecked('check');
+if (id == 0) {
+alert('Please select individu to delete');
+} else {
+const response = confirm('Do you really want to delete?');
+if (response) {
+const url = "{{ path('app_individu_delete',{'id':'placeholder'}) }}";
+const newUrl = url.replace('placeholder', id);
+document.location.href = newUrl
+}
 
-        }
-    }
-</script>
-{% endblock %}
+}
+}
+		</script>
+	{% endblock %}
 {% endblock %}

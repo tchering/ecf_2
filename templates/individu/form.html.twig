@@ -1,7 +1,49 @@
 {% extends "base.html.twig" %}
 {% block body %}
-	{{form_start(form)}}
-	{{form_widget(form)}}
-	<input type="submit" value="submit">
-	{{form_end(form)}}
+	<div class="d-flex justify-content-center mt-4">
+		<div class="w-50 bg-light shadow-lg p-3">
+			<h1 class="title text-dark" id="client">Insert New Individu</h1>
+			<a href="" id="modal_close">
+				<i class="fa fa-close"></i>
+			</a>
+			{{ form_start(form, {'attr': {'class': 'text_center'}}) }}
+
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.numeroMatricule, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Matricule Number'}) }}
+				{{ form_widget(form.numeroMatricule, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<!-- Add other fields similarly -->
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.nom, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Name'}) }}
+				{{ form_widget(form.nom, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.prenom, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Surname'}) }}
+				{{ form_widget(form.prenom, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.adresse, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Address'}) }}
+				{{ form_widget(form.adresse, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.telephone, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Telephone'}) }}
+				{{ form_widget(form.telephone, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.typeindividu, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Type'}) }}
+				{{ form_widget(form.typeindividu, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+			<div class="zone_saisie my-2 row">
+				{{ form_label(form.classe, null, {'label_attr': {'class': 'lab20 fw-bold col-12 col-md-3'}, 'label': 'Class'}) }}
+				{{ form_widget(form.classe, {'attr': {'class': 'form-control w-50'}}) }}
+			</div>
+
+			<div class="d-flex justify-content-between mt-4">
+				<a href="{{ path('app_eval') }}" class="btn btn-secondary">Close</a>
+				<a href="" class="btn btn-primary">Cancel</a>
+				<button type="submit" class="btn btn-success">Validate</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
 {% endblock %}

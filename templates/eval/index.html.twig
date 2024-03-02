@@ -45,8 +45,9 @@
 </div>
 {% block script %}
 <script>
-	const show = () => {
-
+	const add = () => {
+		const url = "{{path('app_eval_new',{'id':0})}}";
+		document.location.href = url;
 	}
 
 

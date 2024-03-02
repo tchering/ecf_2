@@ -28,11 +28,22 @@
 						<th class="bg-black col-3 ">FORMATEUR</th>
 						<th class="bg-black col-1 ">CLASSE</th>
 						<th class="bg-black col-2 ">MATIERE</th>
-						<th class="bg-black col-2 ">ELEVE</th>
 					</tr>
 				</thead>
 				<tbody id="tbody_eval">
-
+					{% for evaluation in evaluations %}
+					<tr class="text-center">
+						<td><input type="checkbox" class="form-check-input" name="check" id="{{evaluation.id}}"
+								value="{{evaluation.id}}" onclick="onlyOne(this)"></td>
+						<td>{{evaluation.trimestre.anneescolaire.code}}</td>
+						<td>{{evaluation.trimestre.libelle}}</td>
+						<td>{{evaluation.numero}}</td>
+						<td>{{ evaluation.dateEvaluation|date('Y-m-d') }}</td>
+						<td>{{ evaluation.individu.nom ~ ' ' ~ evaluation.individu.prenom }}</td>
+						<td>{{evaluation.individu.classe.libelle}}</td>
+						<td>{{evaluation.matiere.libelle}}</td>
+					</tr>
+					{% endfor %}
 				</tbody>
 				<tfoot id="tfooter_eval">
 					<tr class="">
@@ -52,8 +63,15 @@
 
 
 	const saisirNote = () => {
-		const url = "{{ path('app_saisir_note') }}";
-		document.location.href = url;
+		let id = getIdChecked('check');
+		if (id == 0) {
+			alert('Please select line to modify note of eleve');
+		} else {
+			const url = "{{ path('app_saisir_note',{'id':'placeholder'}) }}";
+			const newUrl = url.replace('placeholder', id);
+			document.location.href = newUrl;
+		}
+
 	}
 </script>
 {% endblock %}

@@ -13,10 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class EvalController extends AbstractController
 {
     #[Route('/eval', name: 'app_eval')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
+        $evaluations = $em->getRepository(Evaluation::class)->findAll();
         return $this->render('eval/index.html.twig', [
             'controller_name' => 'EvalController',
+            'evaluations' => $evaluations
         ]);
     }
 

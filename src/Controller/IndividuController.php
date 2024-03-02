@@ -18,7 +18,8 @@ class IndividuController extends AbstractController
         $individus = $em->getRepository(Individu::class)->findAll();
         return $this->render('individu/index.html.twig', [
             'controller_name' => 'IndividuController',
-            'individus' => $individus
+            'individus' => $individus,
+            'total' => count($individus)
         ]);
     }
 

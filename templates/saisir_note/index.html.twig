@@ -98,6 +98,10 @@ Evaluation Trimestrielle
 			</a>
 			<div action="" class="text_center">
 				<div class="zone_saisie my-2 row">
+					<label for="" class="lab20 fw-bold col-12 col-md-3">ID</label>
+					<input type="text" id="id" class="form-control w-50" disabled>
+				</div>
+				<div class="zone_saisie my-2 row">
 					<label for="" class="lab20 fw-bold col-12 col-md-3">CODE</label>
 					<input type="text" id="code" value="" class="form-control w-50" disabled>
 				</div>
@@ -114,9 +118,9 @@ Evaluation Trimestrielle
 					<textarea id="appreciation" name="adresseClient" class="form-control w-50"></textarea>
 				</div>
 				<div class=" d-flex justify-content-between mt-4">
-					<a href="" class="btn btn-secondary">Fermer</a>
+					<a href="" id="fermer" class="btn btn-secondary">Fermer</a>
 					<a href="" class="btn btn-primary">Annuler</a>
-					<a href="" class="btn btn-success">Valider</a>
+					<a href="javascript:modifyNote()" class="btn btn-success" id="">Valider</a>
 				</div>
 			</div>
 			<img id="loader" src="img/loader1.gif" alt="">
@@ -124,25 +128,48 @@ Evaluation Trimestrielle
 	</div>
 	{% block script %}
 	<script>
+		//! this function will modify the note and appreciation once the valid is clicked.
+		const modifyNote = () => {
+			let id = document.getElementById('id').value;
+			let xhr = new XMLHttpRequest();
+			const url = "{{path('app_modify_note',{'id':'placeholder'})}}";
+			const newUrl = url.replace('placeholder', id);
+			xhr.open('POST', newUrl, true);
+			let data = new FormData();
+			data.append('note', note.value);
+			data.append('appreciation', appreciation.value);
+			xhr.send(data);
+			xhr.onload = () => {
+				if (xhr.status == 200) {
+					let response = xhr.responseText;
+					response = JSON.parse(response);
+					if (response.status == 'success') {
+						document.getElementById('fermer').click();
+					}
+				}
+			}
+		}
 		const modifier = () => {
 			let id = getIdChecked('check');
 			if (id == 0) {
 				alert('Please select eleve to modify Note');
 			} else {
 				let xhr = new XMLHttpRequest();
-				const url = "{{path('app_note_modify',{'id':'placeholder'})}}";
+				const url = "{{path('app_show_modal',{'id':'placeholder'})}}";
 				const newUrl = url.replace('placeholder', id);
-				xhr.open('POST', newUrl);
+				xhr.open('POST', newUrl, true);
 				xhr.onload = () => {
 					if (xhr.status == 200) {
 						let response = xhr.responseText;
 						response = JSON.parse(response);
 						// console.log(response);
+						let id = response.rows.id;
 						let code = response.rows.code;
 						let nom = response.rows.nom;
 						let prenom = response.rows.prenom;
 						let note = response.rows.note;
 						let appreciation = response.rows.appreciation;
+						document.getElementById('id').value = id;
 						document.getElementById('code').value = code;
 						document.getElementById('nomPrenom').value = nom + ' ' + prenom;
 						document.getElementById('note').value = note;

@@ -6,6 +6,7 @@ use App\Entity\Evaluation;
 use App\Entity\LigneEvaluation;
 use App\Form\LigneEvaluationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,7 +29,7 @@ class SaisirNoteController extends AbstractController
             'ligneEvaluations' => $lineEvaluations
         ]);
     }
-    //! This function is to open form and insert the eval id for selected eleve
+    //! This function is to open form and insert the eval id for selected eleve with first note and appreciation.
     #[Route('/saisir/note/choisir/{id}', name: 'app_choisir_eleve')]
     public function choisirEleve(EntityManagerInterface $em, Request $request, $id)
     {
@@ -51,27 +52,50 @@ class SaisirNoteController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    //! This function is to modify note and appreciation for eleve in form modal.
-    #[Route('/saisir/modify/{id}', name: 'app_note_modify')]
-    public function modifyNote(EntityManagerInterface $em, Request $request, $id)
+    //! This function is to open modal with data inside in form modal.
+    #[Route('/saisir/modal/{id}', name: 'app_show_modal')]
+    public function showModal(EntityManagerInterface $em, Request $request, $id)
     {
         $ligneEvaluation  = $em->getRepository(LigneEvaluation::class)->find($id);
 
-    
-       
-            $rows = [
-                'id' => $ligneEvaluation->getId(),
-                'evaluation' => $ligneEvaluation->getEvaluation(),
-                'note' => $ligneEvaluation->getNote(),
-                'appreciation' => $ligneEvaluation->getAppreciation(),
-                'nom' => $ligneEvaluation->getIndividu()->getNom(),
-                'prenom' => $ligneEvaluation->getIndividu()->getPrenom(),
-                'code' => $ligneEvaluation->getEvaluation()->getNumero(),
-            ];
+
+
+        $rows = [
+            'id' => $ligneEvaluation->getId(),
+            'evaluation' => $ligneEvaluation->getEvaluation(),
+            'note' => $ligneEvaluation->getNote(),
+            'appreciation' => $ligneEvaluation->getAppreciation(),
+            'nom' => $ligneEvaluation->getIndividu()->getNom(),
+            'prenom' => $ligneEvaluation->getIndividu()->getPrenom(),
+            'code' => $ligneEvaluation->getEvaluation()->getNumero(),
+        ];
         $response = [
             'rows' => $rows
         ];
         echo json_encode($response);
         exit;
+    }
+    //!This function is to modify note and appreciation from modal.
+    #[Route('/saisir/modify/{id}', name: 'app_modify_note')]
+    public function modifyNote(EntityManagerInterface $em, Request $request, $id)
+    {
+        $id = (int) $id;
+        if ($id) {
+            $ligneEvaluation = $em->getRepository(LigneEvaluation::class)->find($id);
+            //!get data from request
+            $note = $request->request->get('note');
+            $appreciation = $request->request->get('appreciation');
+
+            //! here setter method to update the properties
+            $ligneEvaluation->setNote($note);
+            $ligneEvaluation->setAppreciation($appreciation);
+
+            $em->persist($ligneEvaluation);
+            $em->flush();
+
+            return new JsonResponse(['status' => 'success']);
+        }
+        //Return if error 
+        return new JsonResponse(['status' => 'error', 'message' => 'Something went wrong']);
     }
 }

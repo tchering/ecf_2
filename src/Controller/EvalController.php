@@ -44,4 +44,12 @@ class EvalController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    
+    #[Route('/eval/delete/{id}',name:'app_eval_delete')]
+    public function delete(EntityManagerInterface $em,$id){
+        $evaluation = $em->getRepository(Evaluation::class)->find($id);
+        $em->remove($evaluation);
+        $em->flush();
+        return $this->redirectToRoute('app_eval');
+    }
 }

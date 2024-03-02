@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EvalController!{% endblock %}
+{% block title %}Hello EvalController!
+{% endblock %}
 
 {% block body %}
 <div class="eval-container">
@@ -57,10 +58,19 @@
 {% block script %}
 <script>
 	const add = () => {
-		const url = "{{path('app_eval_new',{'id':0})}}";
+		const url = "{{ path('app_eval_new',{'id':0}) }}";
 		document.location.href = url;
 	}
-
+	const supprimer = () => {
+		let id = getIdChecked('check');
+		if (id == 0) {
+			alert('Please select line to delete');
+		} else {
+			const url = "{{path('app_eval_delete',{'id':'placeholder'})}}";
+			const newUrl = url.replace('placeholder', id);
+			document.location.href = newUrl;
+		}
+	}
 
 	const saisirNote = () => {
 		let id = getIdChecked('check');
@@ -71,7 +81,6 @@
 			const newUrl = url.replace('placeholder', id);
 			document.location.href = newUrl;
 		}
-
 	}
 </script>
 {% endblock %}

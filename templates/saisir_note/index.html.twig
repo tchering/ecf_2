@@ -40,7 +40,9 @@ Evaluation Trimestrielle
 			</div>
 			<div class="buttons d-flex justify-content-between my-3">
 				<a href="javascript:choisirEleve()" class="btn btn-warning">Choisir Eleve</a>
-				<a id="show_modal_art" href="#modal_art" class="btn btn-dark">Modifier</a>
+				<a id="show_modal_art" href="#modal_art" class="btn btn-dark">modal</a>
+
+				<a href="javascript:modifier()" class="btn btn-primary">Modifier</a>
 				<a href="" class="btn btn-primary">Importer</a>
 				<a href="" class="btn btn-success">Exporter vers Excel</a>
 			</div>
@@ -64,18 +66,19 @@ Evaluation Trimestrielle
 						</thead>
 						<tbody id="tbody_eval">
 							{% for ligne in ligneEvaluations %}
-					
-								<tr class="text-center">
-									<td><input type="checkbox" class="form-check-input" id="{{ligne.id}}" value="{{ligne.id}}"></td>
-									<td>{{ligne.evaluation.numero}}</td>
-									<td>{{ligne.individu.nom}}</td>
-									<td>{{ligne.individu.prenom}}</td>
-									<td>{{ligne.note}}</td>
-									<td>{{ligne.appreciation}}</td>
-									<td>{{evaluation.individu.nom }}</td>
-								</tr>
-						
-						{% endfor %}
+
+							<tr class="text-center">
+								<td><input type="checkbox" class="form-check-input" id="{{ligne.id}}"
+										value="{{ligne.id}}" name="check" onclick="onlyOne(this)"></td>
+								<td>{{ligne.evaluation.numero}}</td>
+								<td>{{ligne.individu.nom}}</td>
+								<td>{{ligne.individu.prenom}}</td>
+								<td>{{ligne.note}}</td>
+								<td>{{ligne.appreciation}}</td>
+								<td>{{evaluation.individu.nom }}</td>
+							</tr>
+
+							{% endfor %}
 						</tbody>
 						<tfoot id="tfooter_eval" class="">
 							<tr class="">
@@ -96,19 +99,19 @@ Evaluation Trimestrielle
 			<div action="" class="text_center">
 				<div class="zone_saisie my-2 row">
 					<label for="" class="lab20 fw-bold col-12 col-md-3">CODE</label>
-					<input type="text" id="id" name="" value="" class="form-control w-50">
+					<input type="text" id="code" value="" class="form-control w-50" disabled>
 				</div>
 				<div class="zone_saisie my-2 fw-bold row ">
 					<label for="numClient" class="col-12 col-md-3">NOM & PRENOM</label>
-					<input type="text" id="numClient" name="numClient" class="form-control w-50">
+					<input type="text" id="nomPrenom" class="form-control w-50" value="" disabled>
 				</div>
 				<div class="zone_saisie my-2 fw-bold row ">
 					<label for="nomClient" class="col-12 col-md-3">NOTE</label>
-					<input type="text" id="nomClient" name="nomClient" class="form-control w-50">
+					<input type="text" id="note" name="nomClient" class="form-control w-50">
 				</div>
 				<div class="zone_saisie my-2 fw-bold row ">
 					<label for="adresseClient" class="col-12 col-md-3">APPRECIATION</label>
-					<textarea id="adresseClient" name="adresseClient" class="form-control w-50"></textarea>
+					<textarea id="appreciation" name="adresseClient" class="form-control w-50"></textarea>
 				</div>
 				<div class=" d-flex justify-content-between mt-4">
 					<a href="" class="btn btn-secondary">Fermer</a>
@@ -121,6 +124,35 @@ Evaluation Trimestrielle
 	</div>
 	{% block script %}
 	<script>
+		const modifier = () => {
+			let id = getIdChecked('check');
+			if (id == 0) {
+				alert('Please select eleve to modify Note');
+			} else {
+				let xhr = new XMLHttpRequest();
+				const url = "{{path('app_note_modify',{'id':'placeholder'})}}";
+				const newUrl = url.replace('placeholder', id);
+				xhr.open('POST', newUrl);
+				xhr.onload = () => {
+					if (xhr.status == 200) {
+						let response = xhr.responseText;
+						response = JSON.parse(response);
+						// console.log(response);
+						let code = response.rows.code;
+						let nom = response.rows.nom;
+						let prenom = response.rows.prenom;
+						let note = response.rows.note;
+						let appreciation = response.rows.appreciation;
+						document.getElementById('code').value = code;
+						document.getElementById('nomPrenom').value = nom + ' ' + prenom;
+						document.getElementById('note').value = note;
+						document.getElementById('appreciation').value = appreciation;
+					}
+				}
+				xhr.send();
+			}
+			show_modal_art.click();
+		}
 		const choisirEleve = () => {
 			const url = "{{path('app_choisir_eleve',{'id':0})}}";
 			document.location.href = url;

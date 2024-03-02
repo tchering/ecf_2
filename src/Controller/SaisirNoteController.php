@@ -51,4 +51,27 @@ class SaisirNoteController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    //! This function is to modify note and appreciation for eleve in form modal.
+    #[Route('/saisir/modify/{id}', name: 'app_note_modify')]
+    public function modifyNote(EntityManagerInterface $em, Request $request, $id)
+    {
+        $ligneEvaluation  = $em->getRepository(LigneEvaluation::class)->find($id);
+
+    
+       
+            $rows = [
+                'id' => $ligneEvaluation->getId(),
+                'evaluation' => $ligneEvaluation->getEvaluation(),
+                'note' => $ligneEvaluation->getNote(),
+                'appreciation' => $ligneEvaluation->getAppreciation(),
+                'nom' => $ligneEvaluation->getIndividu()->getNom(),
+                'prenom' => $ligneEvaluation->getIndividu()->getPrenom(),
+                'code' => $ligneEvaluation->getEvaluation()->getNumero(),
+            ];
+        $response = [
+            'rows' => $rows
+        ];
+        echo json_encode($response);
+        exit;
+    }
 }

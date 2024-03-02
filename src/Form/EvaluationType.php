@@ -30,7 +30,7 @@ class EvaluationType extends AbstractType
                 'label_attr' => ['class' => ''],
                 'attr' => ['class' => '']
             ])
-         
+
             ->add('code', EntityType::class, [
                 'class' => AnneeScolaire::class,
                 'choice_label' => 'code',
@@ -52,11 +52,11 @@ class EvaluationType extends AbstractType
                         ->setParameter('libelle', 'formateur');
                 },
             ])
-            ->add('libelle',EntityType::class,[
-                'class'=>Classe::class,
-                'choice_label'=>'libelle',
-                'mapped'=>false,
-                'label'=>'Classe:'
+            ->add('libelle', EntityType::class, [
+                'class' => Classe::class,
+                'choice_label' => 'libelle',
+                'mapped' => false,
+                'label' => 'Classe:'
             ])
             ->add('matiere', EntityType::class, [
                 'class' => Matiere::class,
@@ -69,7 +69,7 @@ class EvaluationType extends AbstractType
                 'attr' => ['class' => 'd-none'],
                 'label_attr' => ['class' => 'd-none'],
             ]);
-          
+
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $data = $event->getData();
             $data['dateEvaluation'] = (new \DateTime())->format('Y-m-d');

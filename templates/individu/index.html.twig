@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndividuController!{% endblock %}
+
+{% block body %}
+<div class="main-container container-fluid">
+    <div class="inner-container">
+        <table class="table">
+            <div class="buttons d-flex justify-content-around mt-4">
+                <a href="javascript:ajouter()" class="btn btn-success">Ajouter</a>
+                <a href="" class="btn btn-primary">Modifier</a>
+                <a href="" class="btn btn-danger">Supprimer</a>
+            </div>
+            <thead>
+                <tr>
+                    <th>Matricule</th>
+                    <th>NOM</th>
+                    <th>PRENOM</th>
+                    <th>ADRESSE</th>
+                    <th>TELEPHONE</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_individu">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="12" class="text-center">Total individu</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% block script %}
+<script>
+    const ajouter = () => {
+        const url = "{{path('app_individu_add',{'id':0})}}";
+        document.location.href = url;
+    }
+</script>
+{% endblock%}
+{% endblock %}

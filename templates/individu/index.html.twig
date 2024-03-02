@@ -8,20 +8,35 @@
         <table class="table">
             <div class="buttons d-flex justify-content-around mt-4">
                 <a href="javascript:ajouter()" class="btn btn-success">Ajouter</a>
-                <a href="" class="btn btn-primary">Modifier</a>
-                <a href="" class="btn btn-danger">Supprimer</a>
+                <a href="javascript:modifier()" class="btn btn-primary">Modifier</a>
+                <a href="javascript:supprimer()" class="btn btn-danger">Supprimer</a>
             </div>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Matricule</th>
                     <th>NOM</th>
                     <th>PRENOM</th>
                     <th>ADRESSE</th>
                     <th>TELEPHONE</th>
+                    <th>CATEGORY</th>
+                    <th>CLASSE</th>
                 </tr>
             </thead>
             <tbody id="tbody_individu">
-
+                {% for individu in individus %}
+                <tr>
+                    <td><input type="checkbox" class="form-check-input" id="{{individu.id}}" value="{{individu.id}}"
+                            name="check" onclick="onlyOne(this)"></td>
+                    <td>{{individu.numeroMatricule}}</td>
+                    <td>{{individu.nom}}</td>
+                    <td>{{individu.prenom}}</td>
+                    <td>{{individu.adresse}}</td>
+                    <td>{{individu.telephone}}</td>
+                    <td>{{individu.typeindividu.libelle}}</td>
+                    <td>{{individu.classe.libelle}}</td>
+                </tr>
+                {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
@@ -36,6 +51,32 @@
     const ajouter = () => {
         const url = "{{path('app_individu_add',{'id':0})}}";
         document.location.href = url;
+    }
+
+    const supprimer = () => {
+        let id = getIdChecked('check');
+        if (id == 0) {
+            alert('Please select the line to delete');
+        } else {
+            let response = confirm('Do you really want to delete the individu?');
+            if (response) {
+                const url = "{{path('app_individu_delete',{'id':'placeholder'})}}";
+                const newUrl = url.replace('placeholder', id);
+                document.location.href = newUrl;
+            }
+        }
+    }
+
+    const modifier = () => {
+        let id = getIdChecked('check');
+        if (id == 0) {
+            alert('Please select the line to modify');
+        } else {
+            const url = "{{path('app_individu_add',{'id':'placeholder'})}}";
+            const newUrl = url.replace('placeholder', id);
+            document.location.href = newUrl;
+        }
+
     }
 </script>
 {% endblock%}

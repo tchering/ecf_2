@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: IndividuRepository::class)]
 class Individu
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

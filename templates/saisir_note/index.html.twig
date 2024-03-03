@@ -43,9 +43,10 @@ Evaluation Trimestrielle
 				<a id="show_modal_art" href="#modal_art" class="btn btn-dark">modal</a>
 
 				<a href="javascript:modifier()" class="btn btn-primary">Modifier</a>
-				<a href="" class="btn btn-primary">Importer</a>
+				<a href="javascript:excel.click()" class="btn btn-primary">Importer</a>
 				<a href="" class="btn btn-success">Exporter vers Excel</a>
 			</div>
+			<input type="file" id="excel" name="excel" class="d-none" onchange="importer()">
 		</form>
 
 		<div class="inner-container container-fluid">
@@ -128,6 +129,21 @@ Evaluation Trimestrielle
 	</div>
 	{% block script %}
 	<script>
+		function importer() {
+			const url_import = "{{path('app_evaluation_import')}}";
+			// console.log(excel.files[0])
+			// alert("Vous etes en train d'importer le  fichier " + excel.files[0]['name']);
+			const file = excel.files[0];
+			let xhr = new XMLHttpRequest();
+			xhr.open('POST', url_import);
+			let data = new FormData();
+			data.append('file', file);
+			xhr.onload = () => {
+				let response = xhr.responseText;
+				alert(response);
+			}
+			xhr.send(data);
+		}
 		//! this function will modify the note and appreciation once the valid is clicked.
 		const modifyNote = () => {
 			let id = document.getElementById('id').value;

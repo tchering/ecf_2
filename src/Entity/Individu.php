@@ -45,10 +45,14 @@ class Individu
     #[ORM\OneToMany(targetEntity: LigneEvaluation::class, mappedBy: 'individu')]
     private Collection $ligneEvaluations;
 
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'individu')]
+    private Collection $photos;
+
     public function __construct()
     {
         $this->evaluations = new ArrayCollection();
         $this->ligneEvaluations = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +198,31 @@ class Individu
             // set the owning side to null (unless already changed)
             if ($ligneEvaluation->getIndividu() === $this) {
                 $ligneEvaluation->setIndividu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): static
+    {
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): static
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getIndividu() === $this) {
+                $photo->setIndividu(null);
             }
         }
 

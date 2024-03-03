@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Photo;
 use App\Entity\Individu;
 use App\Form\IndividuType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class IndividuController extends AbstractController
 {
@@ -36,6 +38,30 @@ class IndividuController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Handle the uploaded photo
+            $photo = $request->files->get('photo');
+            if ($photo) {
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+
+                try {
+                    $photo->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                    error_log("File moved successfully");
+                } catch (FileException $e) {
+                    error_log("File move failed: " . $e->getMessage());
+                }
+
+                // Create a new Photo object and set the name
+                $photoObject = new Photo();
+                $photoObject->setName($newFilename);
+                $photoObject->setIndividu($individu); // Set the associated Individu
+
+                // Add the Photo object to the Individu
+                $individu->addPhoto($photoObject);
+            }
             $em->persist($individu);
             $em->flush();
             return $this->redirectToRoute('app_individu');

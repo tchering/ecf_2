@@ -24,7 +24,7 @@ class EvaluationType extends AbstractType
                 'class' => AnneeScolaire::class,
                 'mapped' => false,
                 'choice_label' => 'code',
-                'label'=>'Annee Scolaire'
+                'label' => 'Annee Scolaire'
             ])
             ->add('numero')
             ->add('dateEvaluation')
@@ -36,6 +36,7 @@ class EvaluationType extends AbstractType
                 'class' => Individu::class,
                 'choice_label' => 'nom',
                 'label' => 'Formateur',
+                'required' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('i')
                         ->join('i.typeindividu', 't')
@@ -43,15 +44,17 @@ class EvaluationType extends AbstractType
                         ->setParameter('libelle', 'formateur');
                 },
             ])
-            ->add('libelle',EntityType::class,[
-                'class'=>Classe::class,
-                'mapped'=>false,
-                'label'=>'Classe',
-                'choice_label'=>'libelle'
+            ->add('libelle', EntityType::class, [
+                'class' => Classe::class,
+                'mapped' => false,
+                'label' => 'Classe',
+                'choice_label' => 'libelle',
+                'required'=>false,
             ])
             ->add('matiere', EntityType::class, [
                 'class' => Matiere::class,
                 'choice_label' => 'libelle',
+                'required' => false,
             ])
             ->add('college', EntityType::class, [
                 'class' => College::class,

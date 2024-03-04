@@ -29,7 +29,7 @@ class EvalController extends AbstractController
         if ($id) {
             $evaluation = $em->getRepository(Evaluation::class)->find($id);
 
-            dd($evaluation);
+           
         } else {
             $evaluation = new Evaluation();
         }

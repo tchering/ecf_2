@@ -15,7 +15,7 @@ class EvalController extends AbstractController
     #[Route('/eval', name: 'app_eval')]
     public function index(EntityManagerInterface $em): Response
     {
-        $evaluations = $em->getRepository(Evaluation::class)->findAll();
+        $evaluations = $em->getRepository(Evaluation::class)->findBy([], ['id' => 'DESC']);
         return $this->render('eval/index.html.twig', [
             'controller_name' => 'EvalController',
             'evaluations' => $evaluations
@@ -28,8 +28,6 @@ class EvalController extends AbstractController
         $id = (int) $id;
         if ($id) {
             $evaluation = $em->getRepository(Evaluation::class)->find($id);
-
-           
         } else {
             $evaluation = new Evaluation();
         }
@@ -38,15 +36,18 @@ class EvalController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($evaluation);
             $em->flush();
-            return $this->redirectToRoute('app_eval');
+            return $this->redirectToRoute('app_saisir_note', [
+                'id' => $evaluation->getId()
+            ]);
         }
         return $this->render('eval/form.html.twig', [
             'form' => $form->createView()
         ]);
     }
-    
-    #[Route('/eval/delete/{id}',name:'app_eval_delete')]
-    public function delete(EntityManagerInterface $em,$id){
+
+    #[Route('/eval/delete/{id}', name: 'app_eval_delete')]
+    public function delete(EntityManagerInterface $em, $id)
+    {
         $evaluation = $em->getRepository(Evaluation::class)->find($id);
         $em->remove($evaluation);
         $em->flush();

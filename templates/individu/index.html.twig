@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello IndividuController!{% endblock %}
+{% block title %}Hello IndividuController!
+{% endblock %}
 
 {% block body %}
 <div class="main-container container-fluid">
@@ -40,7 +41,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="12" class="text-center">Total individu : {{total}}</th>
+                    <th colspan="12" class="text-center">Total individu :
+                        {{total}}</th>
                 </tr>
             </tfoot>
         </table>
@@ -49,7 +51,7 @@
 {% block script %}
 <script>
     const ajouter = () => {
-        const url = "{{path('app_individu_add',{'id':0})}}";
+        const url = "{{ path('app_individu_add',{'id':0}) }}";
         document.location.href = url;
     }
 
@@ -60,7 +62,7 @@
         } else {
             let response = confirm('Do you really want to delete the individu?');
             if (response) {
-                const url = "{{path('app_individu_delete',{'id':'placeholder'})}}";
+                const url = "{{ path('app_individu_delete',{'id':'placeholder'}) }}";
                 const newUrl = url.replace('placeholder', id);
                 document.location.href = newUrl;
             }
@@ -72,7 +74,7 @@
         if (id == 0) {
             alert('Please select the line to modify');
         } else {
-            const url = "{{path('app_individu_add',{'id':'placeholder'})}}";
+            const url = "{{ path('app_individu_add',{'id':'placeholder'}) }}";
             const newUrl = url.replace('placeholder', id);
             document.location.href = newUrl;
         }
